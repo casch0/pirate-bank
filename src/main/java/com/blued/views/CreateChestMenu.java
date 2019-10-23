@@ -65,7 +65,7 @@ public class CreateChestMenu implements View {
 	public void addUsersToSharedChest() {
 		boolean isDone = false;
 		while (!isDone) {
-			System.out.println("Do ye want to share with another pirate? (Please type 'yes' or 'no'");
+			System.out.println("Do ye want to share with another pirate? (Please type 'yes' or 'no')");
 			String input = ScannerUtil.getStringInput();
 			if (input.toLowerCase().equals("no")) {
 				isDone = true;

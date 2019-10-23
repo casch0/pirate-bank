@@ -56,7 +56,7 @@ public class UserMenu implements View {
 		int input = ScannerUtil.getInput(2);
 
 		if (input == 0)
-			return null;
+			return new MainMenu();
 		else if (input == 1) {
 			System.out.println("Which chest would ye like to gander at? (Choose chest number)");
 			int chest_input = ScannerUtil.getInput(10_000);

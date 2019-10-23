@@ -5,15 +5,15 @@ import com.blued.util.ScannerUtil;
 public class MainMenu implements View {
 
 	public void printMenu() {
-		System.out.println("WELCOME TO GOLD ROGER'S DINGHY OF DEBLOON DEPOSITS AND WITHDRAWALS AND TRANSFERS!");
-		System.out.println("____________________________________________________________________________________");
+//		System.out.println("WELCOME TO GOLD ROGER'S DINGHY OF DEBLOON DEPOSITS AND WITHDRAWALS AND TRANSFERS!");
+//		System.out.println("____________________________________________________________________________________");
 		System.out.println("1. Take a gander at ye booty! (Login)");
-		System.out.println("2. Start your own booty chest! (Create Account)");
+		System.out.println("2. Become a valued chest owner! (Create Account)");
 		System.out.println("0. Quit!");
 	}
 	
 	public View process() {
-		printBoat();
+//		printBoat();
 		printMenu();
 		int selection = ScannerUtil.getInput(2);
 		
@@ -25,7 +25,7 @@ public class MainMenu implements View {
 		}
 	}
 	
-	public void printBoat() {
+	public static void printBoat() {
 		System.out.println("                                      I");
 		System.out.println("                                   _.$I");
 		System.out.println("                                _.$#$$I");
