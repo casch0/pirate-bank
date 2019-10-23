@@ -19,7 +19,7 @@ public class UserDao implements Savepoint{
 	public PirateChest transfer(PirateChest chestFrom, PirateChest chestTo, BigDecimal amount) {
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			connection.setAutoCommit(false);
-			
+			connection.setTransactionIsolation(4);
 			Savepoint savepoint1 = connection.setSavepoint("Savepoint1");
 			
 			String sql = "update chests set booty_amount = booty_amount + ? where chest_number = ?;";
@@ -422,6 +422,38 @@ public class UserDao implements Savepoint{
 	public String getSavepointName() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void closeAccount(int chest_number) {
+		PirateChest chest = getChest(chest_number);
+		String table_name = "";
+		
+		if(chest!=null) {
+			try (Connection connection = ConnectionUtil.getConnection()) {
+				String sql = "delete from chests where chest_number = ?;";
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setInt(1, chest_number);
+				statement.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			try (Connection connection = ConnectionUtil.getConnection()) {
+				String sql = "delete from pirates_sharing_chests where shared_number = ?;";
+				PreparedStatement statement = connection.prepareStatement(sql);
+				statement.setInt(1, chest_number);
+				statement.executeUpdate();
+				String sql2 = "delete from shared_chests where shared_number = ?;";
+				PreparedStatement statement2 = connection.prepareStatement(sql2);
+				statement2.setInt(1, chest_number);
+				statement2.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 	}
 
 }

@@ -25,6 +25,7 @@ public class UserMenu implements View {
 		System.out.println("1. Add some Debloons to a chest! (Deposit)");
 		System.out.println("2. Take some Debloons from a chest! (Withdraw)");
 		System.out.println("3. Move some Debloons from one chest to another! (Transfer)");
+		System.out.println("4. Take yer Debloons and close this chest! (Close Account)");
 		System.out.println("0. Quit");
 	}
 
@@ -38,6 +39,7 @@ public class UserMenu implements View {
 			return new CreateChestMenu(pirate);
 		}
 		System.out.println("| Chest # |  Number of Debloons  |   Chest Type   |");
+		System.out.println("___________________________________________________");
 		for (PirateChest chest : chests) {
 			System.out.println("|    " + chest.getChestID() + "    |    " + chest.getBooty().doubleValue()
 					+ " Debloons    |    " + chest.getType() + "    |");
@@ -77,7 +79,7 @@ public class UserMenu implements View {
 				if (chest_number == s.getShared_number())
 					sharedChest = s;
 
-			int selection = ScannerUtil.getInput(3);
+			int selection = ScannerUtil.getInput(4);
 			switch (selection) {
 			case 0:
 				return new MainMenu();
@@ -116,8 +118,18 @@ public class UserMenu implements View {
 				return new UserMenu(pirate);
 			}
 			case 3: {
+				System.out.println("| Chest # |  Number of Debloons  |   Chest Type   |");
+				System.out.println("___________________________________________________");
+				for (PirateChest chestP : chests) {
+					System.out.println("|    " + chestP.getChestID() + "    |    " + chestP.getBooty().doubleValue()
+							+ " Debloons    |    " + chestP.getType() + "    |");
+				}
+				for (SharedChest chestP : shared_chests) {
+					System.out.println("|    " + chestP.getShared_number() + "    |    " + chestP.getBooty().doubleValue()
+							+ " Debloons    |    " + chestP.getChest_type() + "    |");
+				}
 				System.out.println("You'll need to give me the chest number that you'd like to transfer to first!");
-				int transfer = ScannerUtil.getInput(10_000);
+				int transfer = ScannerUtil.getInput(100);
 				PirateChest transferChest = userDao.getChest(transfer);
 				SharedChest transferSChest = userDao.getSharedChest(transfer);
 
@@ -151,6 +163,21 @@ public class UserMenu implements View {
 				}
 
 
+			}
+			case 4: {
+				System.out.println("Are ye REALLY sure ye want to close this chest?('yes' or 'no')");
+				String answer = "";
+				while(answer.isEmpty()) {
+					String str = ScannerUtil.getStringInput();
+					if(str.equals("yes") || str.equals("no")) answer = str;
+					else System.out.println("This is a yes or no question ye dunce!");
+				}
+				if(answer.equals("yes")) {
+					userDao.closeAccount(chest_number);
+					return new UserMenu(pirate);
+				}
+				if(answer.equals("no")) return new UserMenu(pirate);
+				
 			}
 			default:
 				return null;
