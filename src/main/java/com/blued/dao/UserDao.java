@@ -15,7 +15,7 @@ import com.blued.models.SharedChest;
 import com.blued.util.ConnectionUtil;
 
 public class UserDao implements Savepoint{
-	
+	//Apologize for the ton of code!
 	public PirateChest transfer(PirateChest chestFrom, PirateChest chestTo, BigDecimal amount) {
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			connection.setAutoCommit(false);
